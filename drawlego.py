@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 import pyvista as pv
 
@@ -235,10 +236,11 @@ def main():
     parser.add_argument("input", help="Path to YAML input file")
     parser.add_argument(
         "--output",
-        default="lego_config.png",
-        help="Path to output image (default: lego_config.png)",
+        help="Path to output image (default: input file with .png suffix)",
     )
     args = parser.parse_args()
+
+    output_path = args.output or str(Path(args.input).with_suffix(".png"))
 
     plotter = pv.Plotter(off_screen=True, window_size=[1200, 900])
     plotter.set_background("white")
@@ -270,7 +272,7 @@ def main():
     plotter.reset_camera(bounds=scene_bounds)
     plotter.camera.zoom(0.9)
 
-    plotter.screenshot(args.output)
+    plotter.screenshot(output_path)
     plotter.close()
 
 
