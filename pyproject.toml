@@ -6,7 +6,7 @@ authors = [
     {name = "Till Hofmann",email = "till.hofmann@ml.rwth-aachen.de"}
 ]
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 dependencies = [
     "pyvista (>=0.47.3,<0.48.0)",
     "pyyaml (>=6.0.2,<7.0.0)"

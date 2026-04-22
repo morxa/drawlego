@@ -4,7 +4,7 @@ Render LEGO block configurations from YAML files into PNG images.
 
 ## Requirements
 
-- Python 3.14+
+- Python 3.10+
 - A working Python environment (`venv`, Poetry, etc.)
 
 Project dependencies:
