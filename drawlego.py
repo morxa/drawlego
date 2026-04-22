@@ -14,6 +14,7 @@ STUD_RADIUS = 0.3
 CONTACT_EPS = 1e-3
 SCENE_BOUNDS = (0, 8, 0, 8, 0, 4)
 POSITION_SCALE = 50.0
+ALLOWED_ROTATIONS = {0, 90}
 
 
 def brick_dimensions(block_type):
@@ -38,6 +39,35 @@ def scaled_pos_to_grid(pos):
     return x, y, z_layer
 
 
+def parse_rotation_degrees(rotation):
+    """Parse a block rotation and return z-rotation in degrees (0 or 90)."""
+    if rotation is None:
+        return 0
+
+    # Support both scalar rotations and [x, y, z] vectors.
+    if isinstance(rotation, (int, float)):
+        z_rotation = int(round(float(rotation)))
+    else:
+        if not isinstance(rotation, (list, tuple)) or len(rotation) != 3:
+            raise ValueError(
+                "Rotation must be a number or a 3-value list like [0, 0, 90]."
+            )
+
+        x_rot = int(round(float(rotation[0])))
+        y_rot = int(round(float(rotation[1])))
+        z_rotation = int(round(float(rotation[2])))
+
+        if x_rot != 0 or y_rot != 0:
+            raise ValueError(
+                "Only z-axis rotation is supported; x and y rotation must be 0."
+            )
+
+    if z_rotation not in ALLOWED_ROTATIONS:
+        raise ValueError(f"Unsupported rotation: {z_rotation}. Allowed: 0 or 90.")
+
+    return z_rotation
+
+
 def load_bricks_from_yaml(yaml_path):
     """Load bricks from YAML and convert them to internal brick tuples."""
     if yaml is None:
@@ -53,8 +83,12 @@ def load_bricks_from_yaml(yaml_path):
         block_type = block["type"]
         color = block["color"]
         pos = block["pos"]
+        rotation = block.get("rotation")
 
         width, depth = brick_dimensions(block_type)
+        z_rotation = parse_rotation_degrees(rotation)
+        if z_rotation == 90:
+            width, depth = depth, width
         x0, y0, z_layer = scaled_pos_to_grid(pos)
         bricks.append((x0, y0, z_layer, width, depth, color))
 
