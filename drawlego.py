@@ -1,4 +1,11 @@
+import argparse
+
 import pyvista as pv
+
+try:
+    import yaml
+except ModuleNotFoundError:  # pragma: no cover - depends on runtime env
+    yaml = None
 
 LAYER_PITCH = 1.2
 STUD_HEIGHT = 0.2
@@ -6,6 +13,74 @@ BRICK_BODY_HEIGHT = LAYER_PITCH - STUD_HEIGHT
 STUD_RADIUS = 0.3
 CONTACT_EPS = 1e-3
 SCENE_BOUNDS = (0, 8, 0, 8, 0, 4)
+POSITION_SCALE = 50.0
+
+
+def brick_dimensions(block_type):
+    """Extract brick dimensions from a type name like 'brick_4x2'."""
+    parts = block_type.split("_")
+    if len(parts) < 2 or "x" not in parts[-1]:
+        raise ValueError(f"Unsupported block type: {block_type}")
+
+    width_str, depth_str = parts[-1].split("x", maxsplit=1)
+    return int(width_str), int(depth_str)
+
+
+def scaled_pos_to_grid(pos):
+    """Scale YAML position coordinates to stud/layer grid coordinates."""
+    if len(pos) != 3:
+        raise ValueError(f"Position must contain 3 values, got: {pos}")
+
+    x_raw, y_raw, z_raw = pos
+    x = int(round(float(x_raw) * POSITION_SCALE))
+    y = int(round(float(y_raw) * POSITION_SCALE))
+    z_layer = int(round(float(z_raw) * POSITION_SCALE))
+    return x, y, z_layer
+
+
+def load_bricks_from_yaml(yaml_path):
+    """Load bricks from YAML and convert them to internal brick tuples."""
+    if yaml is None:
+        raise RuntimeError("PyYAML is required. Install dependencies and retry.")
+
+    with open(yaml_path, "r", encoding="utf-8") as handle:
+        data = yaml.safe_load(handle)
+
+    blocks = data.get("blocks", [])
+    bricks = []
+
+    for block in blocks:
+        block_type = block["type"]
+        color = block["color"]
+        pos = block["pos"]
+
+        width, depth = brick_dimensions(block_type)
+        x0, y0, z_layer = scaled_pos_to_grid(pos)
+        bricks.append((x0, y0, z_layer, width, depth, color))
+
+    return bricks
+
+
+def scene_bounds_for_bricks(bricks):
+    """Compute plotting bounds that enclose all bricks with a small margin."""
+    if not bricks:
+        return SCENE_BOUNDS
+
+    xmin = min(x0 for x0, _, _, _, _, _ in bricks)
+    xmax = max(x0 + width for x0, _, _, width, _, _ in bricks)
+    ymin = min(y0 for _, y0, _, _, _, _ in bricks)
+    ymax = max(y0 + depth for _, y0, _, _, depth, _ in bricks)
+    zmax_layer = max(z_layer for _, _, z_layer, _, _, _ in bricks)
+
+    margin = 1
+    return (
+        xmin - margin,
+        xmax + margin,
+        ymin - margin,
+        ymax + margin,
+        0,
+        zmax_layer + 2,
+    )
 
 
 def brick_cells(brick):
@@ -122,22 +197,28 @@ def draw_brick(plotter, x0, y0, z_layer, width, depth, color, hidden_stud_cells=
 
 
 def main():
-    plotter = pv.Plotter(off_screen=True, window_size=(1200, 900))
+    parser = argparse.ArgumentParser(description="Render LEGO configuration from YAML.")
+    parser.add_argument("input", help="Path to YAML input file")
+    parser.add_argument(
+        "--output",
+        default="lego_config.png",
+        help="Path to output image (default: lego_config.png)",
+    )
+    args = parser.parse_args()
+
+    plotter = pv.Plotter(off_screen=True, window_size=[1200, 900])
     plotter.set_background("white")
 
     # Brick layout: (x, y, z_layer, width, depth, color)
-    bricks = [
-        (2, 2, 0, 2, 4, "#F5C242"),  # Yellow base brick (2x4)
-        (2, 4, 1, 2, 2, "#64A1D8"),  # Blue middle brick (2x2)
-        (2, 4, 2, 2, 2, "#5EBB76"),  # Green top brick (2x2)
-    ]
+    bricks = load_bricks_from_yaml(args.input)
+    scene_bounds = scene_bounds_for_bricks(bricks)
 
     covered_cells = covered_cells_by_layer(bricks)
     for brick, hidden_studs in zip(bricks, covered_cells):
         draw_brick(plotter, *brick, hidden_stud_cells=hidden_studs)
 
     plotter.show_bounds(
-        bounds=SCENE_BOUNDS,
+        bounds=scene_bounds,
         location="outer",
         all_edges=False,
         xtitle="x (studs)",
@@ -145,17 +226,17 @@ def main():
         ztitle="z (layers)",
         color="black",
     )
-    add_selected_plane_grids(plotter, SCENE_BOUNDS, color="black")
+    add_selected_plane_grids(plotter, scene_bounds, color="black")
 
     plotter.camera_position = [
         (12.5, -7.5, 8.5),
         (3.0, 4.0, 1.2),
         (0.0, 0.0, 1.0),
     ]
-    plotter.reset_camera(bounds=SCENE_BOUNDS)
+    plotter.reset_camera(bounds=scene_bounds)
     plotter.camera.zoom(0.9)
 
-    plotter.screenshot("lego_config.png")
+    plotter.screenshot(args.output)
     plotter.close()
 
 
