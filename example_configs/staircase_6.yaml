@@ -1,0 +1,36 @@
+blocks:
+  - name: "step_0"
+    type: "brick_2x2"
+    color: tan
+    pos: [0.00, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "step_1_base"
+    type: "brick_2x2"
+    color: blue
+    pos: [0.04, 0.00, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "step_1_top"
+    type: "brick_2x2"
+    color: blue
+    pos: [0.04, 0.00, 0.02]
+    rotation: [0, 0, 0]
+
+  - name: "step_2_base"
+    type: "brick_2x2"
+    color: red
+    pos: [0.08, 0.00, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "step_2_mid"
+    type: "brick_2x2"
+    color: red
+    pos: [0.08, 0.00, 0.02]
+    rotation: [0, 0, 0]
+
+  - name: "step_2_top"
+    type: "brick_2x2"
+    color: red
+    pos: [0.08, 0.00, 0.04]
+    rotation: [0, 0, 90]

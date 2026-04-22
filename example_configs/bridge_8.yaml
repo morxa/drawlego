@@ -1,0 +1,48 @@
+blocks:
+  - name: "left_foot"
+    type: "brick_2x2"
+    color: darkgray
+    pos: [0.00, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "right_foot"
+    type: "brick_2x2"
+    color: darkgray
+    pos: [0.08, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "left_column_mid"
+    type: "brick_2x2"
+    color: gray
+    pos: [0.00, 0.00, 0.02]
+    rotation: [0, 0, 90]
+
+  - name: "left_column_top"
+    type: "brick_2x2"
+    color: gray
+    pos: [0.00, 0.00, 0.04]
+    rotation: [0, 0, 0]
+
+  - name: "right_column_mid"
+    type: "brick_2x2"
+    color: gray
+    pos: [0.08, 0.00, 0.02]
+    rotation: [0, 0, 90]
+
+  - name: "right_column_top"
+    type: "brick_2x2"
+    color: gray
+    pos: [0.08, 0.00, 0.04]
+    rotation: [0, 0, 0]
+
+  - name: "bridge_left"
+    type: "brick_4x2"
+    color: yellow
+    pos: [0.00, 0.00, 0.06]
+    rotation: [0, 0, 0]
+
+  - name: "bridge_right"
+    type: "brick_4x2"
+    color: yellow
+    pos: [0.04, 0.00, 0.06]
+    rotation: [0, 0, 0]

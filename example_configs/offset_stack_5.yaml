@@ -1,0 +1,30 @@
+blocks:
+  - name: "base_left"
+    type: "brick_4x2"
+    color: yellow
+    pos: [0.00, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "base_right"
+    type: "brick_4x2"
+    color: green
+    pos: [0.08, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "second_left"
+    type: "brick_2x2"
+    color: blue
+    pos: [0.00, 0.00, 0.02]
+    rotation: [0, 0, 90]
+
+  - name: "second_right"
+    type: "brick_2x2"
+    color: red
+    pos: [0.08, 0.00, 0.02]
+    rotation: [0, 0, 90]
+
+  - name: "top_center"
+    type: "brick_2x2"
+    color: white
+    pos: [0.08, 0.00, 0.04]
+    rotation: [0, 0, 0]

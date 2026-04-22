@@ -1,0 +1,72 @@
+blocks:
+  - name: "c00"
+    type: "brick_2x2"
+    color: red
+    pos: [0.00, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "c10"
+    type: "brick_2x2"
+    color: blue
+    pos: [0.04, 0.00, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "c20"
+    type: "brick_2x2"
+    color: green
+    pos: [0.08, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "c30"
+    type: "brick_2x2"
+    color: yellow
+    pos: [0.12, 0.00, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "c01"
+    type: "brick_2x2"
+    color: white
+    pos: [0.00, 0.04, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "c11"
+    type: "brick_2x2"
+    color: tan
+    pos: [0.04, 0.04, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "c21"
+    type: "brick_2x2"
+    color: orange
+    pos: [0.08, 0.04, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "c31"
+    type: "brick_2x2"
+    color: darkgray
+    pos: [0.12, 0.04, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "tower_a1"
+    type: "brick_2x2"
+    color: purple
+    pos: [0.04, 0.00, 0.02]
+    rotation: [0, 0, 0]
+
+  - name: "tower_a2"
+    type: "brick_2x2"
+    color: purple
+    pos: [0.04, 0.00, 0.04]
+    rotation: [0, 0, 90]
+
+  - name: "tower_b1"
+    type: "brick_2x2"
+    color: cyan
+    pos: [0.12, 0.04, 0.02]
+    rotation: [0, 0, 0]
+
+  - name: "tower_b2"
+    type: "brick_2x2"
+    color: cyan
+    pos: [0.12, 0.04, 0.04]
+    rotation: [0, 0, 90]

@@ -1,0 +1,18 @@
+blocks:
+  - name: "base_4x2"
+    type: "brick_4x2"
+    color: yellow
+    pos: [0.00, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "mid_2x2"
+    type: "brick_2x2"
+    color: blue
+    pos: [0.00, 0.00, 0.02]
+    rotation: [0, 0, 90]
+
+  - name: "top_2x2"
+    type: "brick_2x2"
+    color: red
+    pos: [0.00, 0.00, 0.04]
+    rotation: [0, 0, 0]

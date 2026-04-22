@@ -1,0 +1,54 @@
+blocks:
+  - name: "g00"
+    type: "brick_2x2"
+    color: red
+    pos: [0.00, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "g10"
+    type: "brick_2x2"
+    color: blue
+    pos: [0.04, 0.00, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "g20"
+    type: "brick_2x2"
+    color: green
+    pos: [0.08, 0.00, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "g01"
+    type: "brick_2x2"
+    color: yellow
+    pos: [0.00, 0.04, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "g11"
+    type: "brick_2x2"
+    color: white
+    pos: [0.04, 0.04, 0.00]
+    rotation: [0, 0, 0]
+
+  - name: "g21"
+    type: "brick_2x2"
+    color: orange
+    pos: [0.08, 0.04, 0.00]
+    rotation: [0, 0, 90]
+
+  - name: "upper_left"
+    type: "brick_2x2"
+    color: tan
+    pos: [0.00, 0.00, 0.02]
+    rotation: [0, 0, 0]
+
+  - name: "upper_center"
+    type: "brick_2x2"
+    color: tan
+    pos: [0.04, 0.00, 0.02]
+    rotation: [0, 0, 90]
+
+  - name: "upper_right"
+    type: "brick_2x2"
+    color: tan
+    pos: [0.08, 0.00, 0.02]
+    rotation: [0, 0, 0]
